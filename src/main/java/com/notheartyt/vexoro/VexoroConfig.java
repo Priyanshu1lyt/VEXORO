@@ -23,6 +23,28 @@ public final class VexoroConfig {
     public float hudScale = 1.0f;
     public float hudOpacity = 1.0f;
 
+    // Potion HUD (potionX = -1 means "top right")
+    public int potionX = -1;
+    public int potionY = 4;
+    public boolean potionHorizontal = false;
+    public boolean potionMini = false;
+    public int potionGap = 2;
+    public float potionBgOpacity = 0.4f;
+
+    // Armor HUD
+    public int armorX = 4;
+    public int armorY = 60;
+    public float armorScale = 1.0f;
+    public int armorDamageMode = 0; // 0 = bar, 1 = number, 2 = percent
+    public boolean armorShowHelmet = true;
+    public boolean armorShowChest = true;
+    public boolean armorShowLegs = true;
+    public boolean armorShowBoots = true;
+    public boolean armorShowMainHand = false;
+    public boolean armorShowOffHand = false;
+    public boolean armorShowFreeSlots = true;
+    public boolean armorShowArrows = true;
+
     private static VexoroConfig instance = new VexoroConfig();
 
     private VexoroConfig() {}
@@ -67,6 +89,10 @@ public final class VexoroConfig {
         if (accentColor == null) accentColor = "#A855F7";
         hudScale = Math.max(0.5f, Math.min(2.0f, hudScale));
         hudOpacity = Math.max(0.1f, Math.min(1.0f, hudOpacity));
+        potionGap = Math.max(0, Math.min(8, potionGap));
+        potionBgOpacity = Math.max(0f, Math.min(1f, potionBgOpacity));
+        armorScale = Math.max(0.5f, Math.min(2.5f, armorScale));
+        armorDamageMode = Math.max(0, Math.min(2, armorDamageMode));
     }
 
     /** Accent color as ARGB with the configured HUD opacity applied. */
@@ -88,4 +114,4 @@ public final class VexoroConfig {
     private int alpha() {
         return Math.max(8, Math.min(255, Math.round(hudOpacity * 255f)));
     }
-          }
+            }
