@@ -11,6 +11,9 @@ import net.minecraft.client.render.RenderTickCounter;
 
 /** Draws every enabled module: text modules are stacked left/right, others draw themselves. */
 public final class HudRenderer {
+    /** True while the HUD editor is open (it draws its own previews). */
+    public static boolean suppressed = false;
+
     private HudRenderer() {}
 
     public static void init() {
@@ -19,7 +22,7 @@ public final class HudRenderer {
 
     private static void render(DrawContext context, RenderTickCounter tickCounter) {
         MinecraftClient client = MinecraftClient.getInstance();
-        if (client.player == null || client.options.hudHidden) return;
+        if (suppressed || client.player == null || client.options.hudHidden) return;
 
         VexoroConfig config = VexoroConfig.get();
         int accent = config.accentArgb();
