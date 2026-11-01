@@ -1,3 +1,11 @@
 {
-  "key.vexoro.open": "Open VEXORO Menu"
+  "key.vexoro.open": "Open VEXORO Menu",
+  "key.vexoro.toggle.armor_hud": "Toggle Armor HUD",
+  "key.vexoro.toggle.inventory_hud": "Toggle Inventory HUD",
+  "key.vexoro.toggle.effects_hud": "Toggle Potion HUD",
+  "key.vexoro.toggle.crosshair": "Toggle Custom Crosshair",
+  "key.vexoro.toggle.hitbox": "Toggle Player Hitbox",
+  "key.vexoro.toggle.reach": "Toggle Reach Indicator",
+  "key.vexoro.toggle.position": "Toggle Position HUD",
+  "key.vexoro.toggle.cps": "Toggle CPS Counter"
 }
