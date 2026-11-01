@@ -34,6 +34,21 @@ public abstract class Feature {
     /** True to stack the lines on the right side of the screen instead of the left. */
     public boolean rightSide() { return false; }
 
-    /** Custom drawing for modules that are not plain text (e.g. Armor HUD). */
-    public void render(DrawContext context, MinecraftClient client) {}
-}
+    /** Normal in-game drawing. */
+    public void render(DrawContext context, MinecraftClient client) {
+        render(context, client, false);
+    }
+
+    /** Custom drawing; preview = true draws sample content for the HUD editor. */
+    public void render(DrawContext context, MinecraftClient client, boolean preview) {}
+
+    /** True if this module can be dragged in the HUD editor. */
+    public boolean draggable() { return false; }
+
+    public int hudX() { return 0; }
+    public int hudY() { return 0; }
+    public int hudW() { return 0; }
+    public int hudH() { return 0; }
+
+    public void setHudPos(int x, int y) {}
+    }
