@@ -3,14 +3,18 @@ package com.notheartyt.vexoro.screen;
 import com.notheartyt.vexoro.FeatureRegistry;
 import com.notheartyt.vexoro.VexoroConfig;
 import com.notheartyt.vexoro.feature.Feature;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 
-/** Simple settings screen: one toggle button per module. */
+/** Main VEXORO menu: logo, module toggles, links to options and the HUD editor. */
 public final class VexoroScreen extends Screen {
+    private static final Identifier LOGO = Identifier.of("vexoro", "textures/gui/logo.png");
+
     private final Screen parent;
 
     public VexoroScreen(Screen parent) {
@@ -20,24 +24,31 @@ public final class VexoroScreen extends Screen {
 
     @Override
     protected void init() {
-        int buttonWidth = 150;
-        int buttonHeight = 20;
+        int bw = 150;
+        int bh = 20;
         int gap = 4;
-        int startX = this.width / 2 - buttonWidth - gap / 2;
-        int y = 40;
+        int startX = this.width / 2 - bw - gap / 2;
+        int y = 82;
         int index = 0;
         for (Feature feature : FeatureRegistry.all()) {
-            int x = startX + (index % 2) * (buttonWidth + gap);
+            int x = startX + (index % 2) * (bw + gap);
             this.addDrawableChild(ButtonWidget.builder(label(feature), button -> {
                 feature.setEnabled(!feature.isEnabled());
                 button.setMessage(label(feature));
-            }).dimensions(x, y, buttonWidth, buttonHeight).build());
-            if (index % 2 == 1) y += buttonHeight + gap;
+            }).dimensions(x, y, bw, bh).build());
+            if (index % 2 == 1) y += bh + 2;
             index++;
         }
-        if (index % 2 == 1) y += buttonHeight + gap;
+        if (index % 2 == 1) y += bh + 2;
+        y += 4;
+        this.addDrawableChild(ButtonWidget.builder(Text.literal("HUD Options"),
+                button -> this.client.setScreen(new OptionsScreen(this)))
+                .dimensions(startX, y, bw, bh).build());
+        this.addDrawableChild(ButtonWidget.builder(Text.literal("Edit HUD Positions"),
+                button -> this.client.setScreen(new HudEditScreen(this)))
+                .dimensions(startX + bw + gap, y, bw, bh).build());
         this.addDrawableChild(ButtonWidget.builder(Text.literal("Done"), button -> this.close())
-                .dimensions(this.width / 2 - 75, y + 8, 150, buttonHeight).build());
+                .dimensions(this.width / 2 - 75, y + bh + 6, 150, bh).build());
     }
 
     private static Text label(Feature feature) {
@@ -49,8 +60,8 @@ public final class VexoroScreen extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
-        context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 16,
-                VexoroConfig.get().accentArgb());
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, LOGO,
+                this.width / 2 - 64, 6, 0f, 0f, 128, 72, 512, 288, 512, 288);
     }
 
     @Override
